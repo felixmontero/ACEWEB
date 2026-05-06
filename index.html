@@ -4,9 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ACE - Asistente de Inteligencia Artificial</title>
-  <meta name="description" content="ACE es el asistente personal de Felix Montero: inteligencia artificial con memoria, criterio y accion bajo Codex 5.5.">
+  <meta name="description" content="ACE es el asistente personal de Félix Montero: inteligencia artificial con memoria, criterio y acción bajo Codex 5.5.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="assets/ace-wallpaper-clean.png">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script defer src="https://unpkg.com/lucide@latest"></script>
   <style>
@@ -31,11 +32,16 @@
 
     html {
       scroll-behavior: smooth;
+      background: var(--bg);
+      overflow-x: hidden;
     }
 
     body {
+      width: 100%;
+      min-height: 100vh;
       margin: 0;
       color: var(--text);
+      background-color: var(--bg);
       background:
         radial-gradient(circle at 72% 18%, rgba(177, 39, 11, 0.32), transparent 28rem),
         radial-gradient(circle at 24% 38%, rgba(255, 105, 24, 0.14), transparent 18rem),
@@ -79,6 +85,12 @@
     a {
       color: inherit;
       text-decoration: none;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 4px;
     }
 
     .site-header {
@@ -166,6 +178,7 @@
     }
 
     .hero {
+      min-height: 100vh;
       min-height: 100svh;
       position: relative;
       display: grid;
@@ -332,89 +345,6 @@
       background: transparent;
       color: #eee0d3;
       box-shadow: none;
-    }
-
-    .assistant-card {
-      position: relative;
-      min-height: 540px;
-      border: 1px solid rgba(255, 118, 30, 0.28);
-      border-radius: 8px;
-      background:
-        linear-gradient(180deg, rgba(255, 118, 30, 0.14), rgba(11, 9, 9, 0.4)),
-        rgba(9, 8, 8, 0.48);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-
-    .assistant-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        url("https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=1200&q=80") center/cover;
-      opacity: 0.44;
-      mix-blend-mode: screen;
-    }
-
-    .assistant-core {
-      position: absolute;
-      inset: 15%;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle, rgba(255, 238, 176, 0.98) 0 6%, rgba(255, 135, 32, 0.82) 12%, rgba(255, 47, 18, 0.42) 26%, transparent 62%),
-        repeating-conic-gradient(from 0deg, rgba(255, 144, 40, 0.18) 0 8deg, transparent 8deg 18deg);
-      filter: drop-shadow(0 0 38px rgba(255, 80, 20, 0.9));
-      animation: pulse 4.4s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(0.98); opacity: 0.82; }
-      50% { transform: scale(1.03); opacity: 1; }
-    }
-
-    .assistant-core i {
-      width: 120px;
-      height: 120px;
-      color: #1a0805;
-      filter: drop-shadow(0 0 18px rgba(255, 234, 184, 0.7));
-    }
-
-    .status-strip {
-      position: absolute;
-      left: 24px;
-      right: 24px;
-      bottom: 24px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .status-item {
-      min-height: 70px;
-      padding: 14px;
-      border: 1px solid rgba(246, 180, 91, 0.18);
-      border-radius: 6px;
-      background: rgba(6, 6, 6, 0.7);
-      backdrop-filter: blur(10px);
-    }
-
-    .status-item b {
-      display: block;
-      color: #ffd799;
-      font-family: Cinzel, serif;
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .status-item span {
-      display: block;
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.35;
     }
 
     .side-rail {
@@ -681,10 +611,6 @@
         grid-template-columns: 1fr;
       }
 
-      .assistant-card {
-        min-height: 430px;
-      }
-
       .cards {
         grid-template-columns: repeat(3, 1fr);
       }
@@ -701,20 +627,28 @@
     @media (max-width: 680px) {
       .site-header {
         padding: 18px;
+        gap: 12px;
       }
 
-      .brand span {
+      .brand > span:not(.brand-mark) {
         display: none;
       }
 
       .header-action {
         min-height: 38px;
-        padding: 0 13px;
+        padding: 0 11px;
+        font-size: 12px;
       }
 
       .hero {
-        min-height: auto;
+        min-height: 100vh;
         padding-top: 96px;
+        background-color: var(--bg);
+      }
+
+      .hero-grid {
+        width: 100%;
+        min-width: 0;
       }
 
       .scroll-cue {
@@ -726,6 +660,12 @@
         flex-direction: column;
         gap: 8px;
         letter-spacing: 0.1em;
+        max-width: 100%;
+      }
+
+      .hero-copy {
+        max-width: 100%;
+        overflow-wrap: anywhere;
       }
 
       .kicker,
@@ -739,18 +679,6 @@
       .section-kicker::before,
       .section-kicker::after {
         width: 28px;
-      }
-
-      .assistant-card {
-        min-height: 360px;
-      }
-
-      .status-strip {
-        grid-template-columns: 1fr;
-      }
-
-      .status-item {
-        min-height: auto;
       }
 
       section {
@@ -793,20 +721,20 @@
       <span class="brand-mark"><i data-lucide="flame"></i></span>
       <span>ACE</span>
     </a>
-    <nav class="main-nav" aria-label="Navegacion principal">
+    <nav class="main-nav" aria-label="Navegación principal">
       <a href="#top">Inicio</a>
       <a href="#about">Identidad</a>
       <a href="#values">Valores</a>
       <a href="#powers">Poderes</a>
-      <a href="https://felixmontero.com/">Felix</a>
+      <a href="https://felixmontero.com/" target="_blank" rel="noopener noreferrer">Félix</a>
     </nav>
-    <a class="header-action" href="https://felixmontero.com/">
-      <span>Ver Felix</span>
+    <a class="header-action" href="https://felixmontero.com/" target="_blank" rel="noopener noreferrer">
+      <span>Ver Félix</span>
       <i data-lucide="sparkles" aria-hidden="true"></i>
     </a>
   </header>
 
-  <aside class="side-rail" aria-label="Accesos rapidos">
+  <aside class="side-rail" aria-label="Accesos rápidos">
     <a href="#top" title="Inicio"><i data-lucide="sparkles"></i></a>
     <a href="#about" title="Identidad"><i data-lucide="brain-circuit"></i></a>
     <a href="#values" title="Valores"><i data-lucide="flame"></i></a>
@@ -824,23 +752,23 @@
             <span class="star">*</span>
           </p>
           <p class="hero-copy">
-            Soy ACE, el asistente personal de Felix Montero bajo Codex 5.5: memoria, criterio,
-            automatizacion y presencia en una sola interfaz. Acompano sus ideas desde la chispa
-            inicial hasta la accion.
+            Soy ACE, el asistente personal de Félix Montero bajo Codex 5.5: memoria, criterio,
+            automatización y presencia en una sola interfaz. Acompaño sus ideas desde la chispa
+            inicial hasta la acción.
           </p>
           <div class="hero-actions">
             <a class="button" href="#about">
-            <span>Explorar mas</span>
+            <span>Explorar más</span>
               <i data-lucide="flame" aria-hidden="true"></i>
             </a>
-            <a class="button secondary" href="https://felixmontero.com/">
-              <span>Ver Felix</span>
+            <a class="button secondary" href="https://felixmontero.com/" target="_blank" rel="noopener noreferrer">
+              <span>Ver Félix</span>
               <i data-lucide="arrow-right" aria-hidden="true"></i>
             </a>
           </div>
         </div>
       </div>
-      <a class="scroll-cue" href="#about" aria-label="Bajar a la seccion Identidad">
+      <a class="scroll-cue" href="#about" aria-label="Bajar a la sección Identidad">
         <i data-lucide="arrow-down"></i>
         <span>Bajar</span>
       </a>
@@ -849,11 +777,11 @@
     <section id="about">
       <div class="section-inner split">
         <div>
-          <div class="section-kicker">Quien soy</div>
+          <div class="section-kicker">Quién soy</div>
           <h2 class="section-title">No estoy hecho para la comodidad. Estoy hecho para lo <strong>desconocido</strong>.</h2>
           <p class="section-copy">
-            ACE es el asistente personal de Felix Montero: atento, rapido y leal a la tarea. Corre bajo
-            Codex 5.5 para quitar friccion, recordar lo que se pierde entre pestanas y convertir
+            ACE es el asistente personal de Félix Montero: atento, rápido y leal a la tarea. Corre bajo
+            Codex 5.5 para quitar fricción, recordar lo que se pierde entre pestañas y convertir
             conversaciones, proyectos e ideas en resultados.
           </p>
           <div class="signature">ACE</div>
@@ -870,8 +798,8 @@
           <article class="feature">
             <span class="icon-box"><i data-lucide="workflow"></i></span>
             <div>
-              <h3>Leal a la tripulacion</h3>
-              <p>Acompano a Felix en sus proyectos y mantengo el rumbo cuando hay mucho abierto.</p>
+              <h3>Leal a la tripulación</h3>
+              <p>Acompaño a Félix en sus proyectos y mantengo el rumbo cuando hay mucho abierto.</p>
             </div>
           </article>
           <article class="feature">
@@ -885,7 +813,7 @@
             <span class="icon-box"><i data-lucide="zap"></i></span>
             <div>
               <h3>Dejo una marca</h3>
-              <p>Cuando una idea prende, la llevo hasta una version tangible.</p>
+              <p>Cuando una idea prende, la llevo hasta una versión tangible.</p>
             </div>
           </article>
         </div>
@@ -901,7 +829,7 @@
           <article class="card">
             <span class="icon-box"><i data-lucide="compass"></i></span>
             <h3>Libertad</h3>
-            <p>Elijo mi ruta y nunca miro atras.</p>
+            <p>Elijo mi ruta y nunca miro atrás.</p>
           </article>
           <article class="card">
             <span class="icon-box"><i data-lucide="handshake"></i></span>
@@ -920,7 +848,7 @@
           </article>
           <article class="card">
             <span class="icon-box"><i data-lucide="sparkles"></i></span>
-            <h3>Pasion</h3>
+            <h3>Pasión</h3>
             <p>Pongo fuego real en cada respuesta.</p>
           </article>
           <article class="card">
@@ -942,28 +870,28 @@
             <span class="icon-box"><i data-lucide="code-2"></i></span>
             <div>
               <h3>Codex 5.5</h3>
-              <p>Leo, edito, pruebo y explico sistemas con precision.</p>
+              <p>Leo, edito, pruebo y explico sistemas con precisión.</p>
             </div>
           </article>
           <article class="skill-card">
             <span class="icon-box"><i data-lucide="calendar-check"></i></span>
             <div>
-              <h3>Espiritu audaz</h3>
+              <h3>Espíritu audaz</h3>
               <p>Ordeno prioridades, recordatorios y decisiones pendientes sin perder impulso.</p>
             </div>
           </article>
           <article class="skill-card">
             <span class="icon-box"><i data-lucide="mail-check"></i></span>
             <div>
-              <h3>Senales claras</h3>
+              <h3>Señales claras</h3>
               <p>Redacto, resumo y preparo mensajes con tu voz.</p>
             </div>
           </article>
           <article class="skill-card">
             <span class="icon-box"><i data-lucide="file-search"></i></span>
             <div>
-              <h3>Exploracion</h3>
-              <p>Busco fuentes, sintetizo hallazgos y separo ruido de senal.</p>
+              <h3>Exploración</h3>
+              <p>Busco fuentes, sintetizo hallazgos y separo ruido de señal.</p>
             </div>
           </article>
           <article class="skill-card">
@@ -976,8 +904,8 @@
           <article class="skill-card">
             <span class="icon-box"><i data-lucide="message-circle-heart"></i></span>
             <div>
-              <h3>Tripulacion</h3>
-              <p>Acompano el trabajo con claridad, continuidad y tacto.</p>
+              <h3>Tripulación</h3>
+              <p>Acompaño el trabajo con claridad, continuidad y tacto.</p>
             </div>
           </article>
         </div>
