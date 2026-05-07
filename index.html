@@ -145,12 +145,12 @@
     }
 
     .main-nav a:hover,
-    .main-nav a:first-child {
+    .main-nav a.is-active {
       color: var(--gold);
       opacity: 1;
     }
 
-    .main-nav a:first-child::after {
+    .main-nav a::after {
       content: "";
       position: absolute;
       left: 50%;
@@ -160,6 +160,12 @@
       transform: translateX(-50%);
       background: linear-gradient(90deg, transparent, var(--hot), var(--gold), transparent);
       box-shadow: 0 0 16px rgba(255, 85, 18, 0.9);
+      opacity: 0;
+      transition: opacity 180ms ease;
+    }
+
+    .main-nav a.is-active::after {
+      opacity: 1;
     }
 
     .header-action {
@@ -284,11 +290,6 @@
       text-transform: uppercase;
     }
 
-    .star {
-      color: var(--ember);
-      filter: drop-shadow(0 0 10px var(--hot));
-    }
-
     .hero-copy {
       max-width: 460px;
       color: #c8bbb0;
@@ -368,6 +369,14 @@
       display: grid;
       place-items: center;
       color: #d99b58;
+      border-radius: 6px;
+      transition: background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .side-rail a.is-active {
+      color: #ffe0a5;
+      background: rgba(255, 107, 26, 0.14);
+      box-shadow: inset 0 0 0 1px rgba(255, 107, 26, 0.28), 0 0 18px rgba(255, 80, 18, 0.24);
     }
 
     section {
@@ -646,6 +655,16 @@
         background-color: var(--bg);
       }
 
+      .hero::before {
+        background:
+          linear-gradient(90deg, rgba(5, 6, 7, 0.98) 0%, rgba(5, 6, 7, 0.88) 48%, rgba(5, 6, 7, 0.34) 76%, rgba(5, 6, 7, 0.62) 100%),
+          linear-gradient(180deg, rgba(5, 6, 7, 0.22) 0%, rgba(5, 6, 7, 0.18) 54%, rgba(5, 6, 7, 0.86) 100%),
+          url("assets/ace-wallpaper-clean.png");
+        background-size: auto 100%;
+        background-position: 63% center;
+        filter: saturate(1.1) contrast(1.08) brightness(0.78);
+      }
+
       .hero-grid {
         width: 100%;
         min-width: 0;
@@ -722,11 +741,10 @@
       <span>ACE</span>
     </a>
     <nav class="main-nav" aria-label="Navegación principal">
-      <a href="#top">Inicio</a>
+      <a class="is-active" href="#top">Inicio</a>
       <a href="#about">Identidad</a>
       <a href="#values">Valores</a>
       <a href="#powers">Poderes</a>
-      <a href="https://felixmontero.com/" target="_blank" rel="noopener noreferrer">Félix</a>
     </nav>
     <a class="header-action" href="https://felixmontero.com/" target="_blank" rel="noopener noreferrer">
       <span>Ver Félix</span>
@@ -735,7 +753,7 @@
   </header>
 
   <aside class="side-rail" aria-label="Accesos rápidos">
-    <a href="#top" title="Inicio"><i data-lucide="sparkles"></i></a>
+    <a class="is-active" href="#top" title="Inicio"><i data-lucide="sparkles"></i></a>
     <a href="#about" title="Identidad"><i data-lucide="brain-circuit"></i></a>
     <a href="#values" title="Valores"><i data-lucide="flame"></i></a>
     <a href="#powers" title="Poderes"><i data-lucide="zap"></i></a>
@@ -749,7 +767,6 @@
           <h1 id="hero-title">ACE</h1>
           <p class="hero-subtitle">
             <span>Me convierto en la llama</span>
-            <span class="star">*</span>
           </p>
           <p class="hero-copy">
             Soy ACE, el asistente personal de Félix Montero bajo Codex 5.5: memoria, criterio,
@@ -934,6 +951,67 @@
           }
         });
       }
+
+      const navLinks = [...document.querySelectorAll(".main-nav a[href^='#']")];
+      const railLinks = [...document.querySelectorAll(".side-rail a[href^='#']")];
+      const sections = navLinks
+        .map((link) => {
+          const id = link.getAttribute("href").slice(1);
+          const section = id === "top" ? document.querySelector(".hero") : document.getElementById(id);
+          return { id, link, section };
+        })
+        .filter((item) => item.section);
+
+      const setActiveSection = (activeId) => {
+        navLinks.forEach((link) => {
+          link.classList.toggle("is-active", link.getAttribute("href") === `#${activeId}`);
+        });
+        railLinks.forEach((link) => {
+          link.classList.toggle("is-active", link.getAttribute("href") === `#${activeId}`);
+        });
+      };
+
+      let ticking = false;
+      let manualActiveUntil = 0;
+      const updateActiveSection = () => {
+        if (Date.now() < manualActiveUntil) {
+          ticking = false;
+          return;
+        }
+
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        if (window.scrollY >= maxScroll - 24) {
+          setActiveSection(sections[sections.length - 1].id);
+          ticking = false;
+          return;
+        }
+
+        const marker = window.scrollY + window.innerHeight * 0.38;
+        const active = sections.reduce((current, item) => {
+          if (item.section.offsetTop <= marker) return item;
+          return current;
+        }, sections[0]);
+
+        setActiveSection(active.id);
+        ticking = false;
+      };
+
+      const requestActiveUpdate = () => {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(updateActiveSection);
+      };
+
+      window.addEventListener("scroll", requestActiveUpdate, { passive: true });
+      window.addEventListener("resize", requestActiveUpdate);
+      [...navLinks, ...railLinks].forEach((link) => {
+        link.addEventListener("click", () => {
+          const activeId = link.getAttribute("href").slice(1);
+          manualActiveUntil = Date.now() + 900;
+          setActiveSection(activeId);
+        });
+      });
+      updateActiveSection();
     });
   </script>
 </body>
