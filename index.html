@@ -5,11 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ACE - Asistente de Inteligencia Artificial</title>
   <meta name="description" content="ACE es el asistente personal de Félix Montero: inteligencia artificial con memoria, criterio y acción bajo Codex 5.5.">
+  <link rel="canonical" href="https://ace.felixmontero.com/">
+  <meta property="og:title" content="ACE - Asistente de Inteligencia Artificial">
+  <meta property="og:description" content="ACE es el asistente personal de Félix Montero: memoria, criterio y acción bajo Codex 5.5.">
+  <meta property="og:url" content="https://ace.felixmontero.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://ace.felixmontero.com/assets/ace-wallpaper-1600.webp">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="901">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ACE - Asistente de Inteligencia Artificial">
+  <meta name="twitter:description" content="ACE es el asistente personal de Félix Montero: memoria, criterio y acción bajo Codex 5.5.">
+  <meta name="twitter:image" content="https://ace.felixmontero.com/assets/ace-wallpaper-1600.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="image" href="assets/ace-wallpaper-clean.png">
+  <link rel="preload" as="image" href="assets/ace-wallpaper-1100.avif" fetchpriority="high" type="image/avif" media="(max-width: 680px)">
+  <link rel="preload" as="image" href="assets/ace-wallpaper-1600.avif" fetchpriority="high" type="image/avif" media="(min-width: 681px)">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script defer src="https://unpkg.com/lucide@latest"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "ACE",
+      "applicationCategory": "AIApplication",
+      "operatingSystem": "Web",
+      "url": "https://ace.felixmontero.com/",
+      "description": "ACE es el asistente personal de Félix Montero bajo Codex 5.5.",
+      "creator": {
+        "@type": "Person",
+        "name": "Félix Montero",
+        "url": "https://felixmontero.com/"
+      }
+    }
+  </script>
+  <script defer src="assets/icons.js"></script>
+  <script defer src="assets/main.js"></script>
   <style>
     :root {
       --bg: #050607;
@@ -203,7 +233,11 @@
       background:
         linear-gradient(90deg, rgba(5, 6, 7, 0.98) 0%, rgba(5, 6, 7, 0.9) 22%, rgba(5, 6, 7, 0.42) 48%, rgba(5, 6, 7, 0.08) 74%, rgba(5, 6, 7, 0.2) 100%),
         linear-gradient(180deg, rgba(5, 6, 7, 0.18) 0%, rgba(5, 6, 7, 0) 58%, rgba(5, 6, 7, 0.74) 100%),
-        url("assets/ace-wallpaper-clean.png");
+        image-set(
+          url("assets/ace-wallpaper-1600.avif") type("image/avif"),
+          url("assets/ace-wallpaper-1600.webp") type("image/webp"),
+          url("assets/ace-wallpaper-clean.png") type("image/png")
+        );
       background-size: cover;
       background-position: center top;
       filter: saturate(1.12) contrast(1.05) brightness(0.82);
@@ -659,7 +693,11 @@
         background:
           linear-gradient(90deg, rgba(5, 6, 7, 0.98) 0%, rgba(5, 6, 7, 0.88) 48%, rgba(5, 6, 7, 0.34) 76%, rgba(5, 6, 7, 0.62) 100%),
           linear-gradient(180deg, rgba(5, 6, 7, 0.22) 0%, rgba(5, 6, 7, 0.18) 54%, rgba(5, 6, 7, 0.86) 100%),
-          url("assets/ace-wallpaper-clean.png");
+          image-set(
+            url("assets/ace-wallpaper-1100.avif") type("image/avif"),
+            url("assets/ace-wallpaper-1100.webp") type("image/webp"),
+            url("assets/ace-wallpaper-clean.png") type("image/png")
+          );
         background-size: auto 100%;
         background-position: 63% center;
         filter: saturate(1.1) contrast(1.08) brightness(0.78);
@@ -736,7 +774,7 @@
 </head>
 <body id="top">
   <header class="site-header">
-    <a class="brand" href="#top" aria-label="Ir al inicio">
+    <a class="brand" href="#top" aria-label="ACE, volver al inicio">
       <span class="brand-mark"><i data-lucide="flame"></i></span>
       <span>ACE</span>
     </a>
@@ -787,7 +825,7 @@
       </div>
       <a class="scroll-cue" href="#about" aria-label="Bajar a la sección Identidad">
         <i data-lucide="arrow-down"></i>
-        <span>Bajar</span>
+        <span>Conocer<br>ACE</span>
       </a>
     </section>
 
@@ -933,7 +971,7 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <a class="brand" href="#top">
+      <a class="brand" href="#top" aria-label="ACE, volver al inicio">
         <span class="brand-mark"><i data-lucide="flame"></i></span>
         <span>ACE</span>
       </a>
@@ -942,77 +980,5 @@
     </div>
   </footer>
 
-  <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      if (window.lucide) {
-        window.lucide.createIcons({
-          attrs: {
-            "stroke-width": 1.6
-          }
-        });
-      }
-
-      const navLinks = [...document.querySelectorAll(".main-nav a[href^='#']")];
-      const railLinks = [...document.querySelectorAll(".side-rail a[href^='#']")];
-      const sections = navLinks
-        .map((link) => {
-          const id = link.getAttribute("href").slice(1);
-          const section = id === "top" ? document.querySelector(".hero") : document.getElementById(id);
-          return { id, link, section };
-        })
-        .filter((item) => item.section);
-
-      const setActiveSection = (activeId) => {
-        navLinks.forEach((link) => {
-          link.classList.toggle("is-active", link.getAttribute("href") === `#${activeId}`);
-        });
-        railLinks.forEach((link) => {
-          link.classList.toggle("is-active", link.getAttribute("href") === `#${activeId}`);
-        });
-      };
-
-      let ticking = false;
-      let manualActiveUntil = 0;
-      const updateActiveSection = () => {
-        if (Date.now() < manualActiveUntil) {
-          ticking = false;
-          return;
-        }
-
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        if (window.scrollY >= maxScroll - 24) {
-          setActiveSection(sections[sections.length - 1].id);
-          ticking = false;
-          return;
-        }
-
-        const marker = window.scrollY + window.innerHeight * 0.38;
-        const active = sections.reduce((current, item) => {
-          if (item.section.offsetTop <= marker) return item;
-          return current;
-        }, sections[0]);
-
-        setActiveSection(active.id);
-        ticking = false;
-      };
-
-      const requestActiveUpdate = () => {
-        if (ticking) return;
-        ticking = true;
-        window.requestAnimationFrame(updateActiveSection);
-      };
-
-      window.addEventListener("scroll", requestActiveUpdate, { passive: true });
-      window.addEventListener("resize", requestActiveUpdate);
-      [...navLinks, ...railLinks].forEach((link) => {
-        link.addEventListener("click", () => {
-          const activeId = link.getAttribute("href").slice(1);
-          manualActiveUntil = Date.now() + 900;
-          setActiveSection(activeId);
-        });
-      });
-      updateActiveSection();
-    });
-  </script>
 </body>
 </html>
